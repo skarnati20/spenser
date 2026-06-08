@@ -1,0 +1,12 @@
+[package]
+name = "core"
+version = "0.1.0"
+edition = "2024"
+
+[lints]
+workspace = true
+
+[dependencies]
+types  = { path = "../types" }
+anyhow = "1"
+serde_json = "1"
