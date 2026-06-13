@@ -5,9 +5,16 @@ use crate::ids::{CardId, ChangeId};
 use crate::round::Round;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub enum SessionStatus {
+    Open,
+    Closed,
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Session {
     pub id: ChangeId,
     pub description: String,
+    pub status: SessionStatus,
     pub rounds: Vec<Round>,
     pub cards: HashMap<CardId, Card>,
 }
@@ -17,12 +24,21 @@ impl Session {
         Self {
             id: ChangeId::new(),
             description,
+            status: SessionStatus::Open,
             rounds: Vec::new(),
             cards: HashMap::new(),
         }
     }
 
-        pub fn latest_round(&self) -> Option<&Round> {
+    pub fn is_open(&self) -> bool {
+        matches!(self.status, SessionStatus::Open)
+    }
+
+    pub fn close(&mut self) {
+        self.status = SessionStatus::Closed;
+    }
+
+    pub fn latest_round(&self) -> Option<&Round> {
         self.rounds.last()
     }
  

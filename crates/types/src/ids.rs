@@ -1,3 +1,5 @@
+use std::fmt;
+
 use uuid::Uuid;
 
 // minted, permanent — never derived from content
@@ -5,6 +7,12 @@ use uuid::Uuid;
 pub struct ChangeId(String);
 impl ChangeId {
     pub fn new() -> Self { Self(Uuid::new_v4().to_string()) }
+}
+
+impl fmt::Display for ChangeId {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]

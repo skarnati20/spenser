@@ -1,0 +1,14 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2024"
+
+[lints]
+workspace = true
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+core = { path = "../core" }
+git = { path = "../git" }
+types  = { path = "../types" }
