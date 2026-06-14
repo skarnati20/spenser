@@ -6,14 +6,14 @@ use core::dir::{
     SPENSER_DIR,
     archive_session,
     create_session,
-    find_spencer_dir,
+    find_spenser_dir,
     read_session,
     write_default_config,
 };
 
 pub fn execute(description: String) -> Result<()> {
     let current_dir = env::current_dir()?;
-    let spenser_dir = find_spencer_dir(&current_dir);
+    let spenser_dir = find_spenser_dir(&current_dir);
 
     let spenser_dir = match spenser_dir {
         Some(dir) => dir,

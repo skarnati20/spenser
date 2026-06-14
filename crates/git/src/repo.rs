@@ -4,6 +4,7 @@ use anyhow::Result;
 use git2::Oid;
 use git2::Patch;
 use git2::Repository;
+use core::Vcs;
 use types::{CommitHash, DiffLine, Enrichments, FileDiff, FileStatus,
             HunkRange, LineKind, Region};
 
@@ -88,12 +89,14 @@ impl GitRepo {
         Ok(files)
     }
 
-    pub fn resolve(&self, refspec: &str) -> Result<CommitHash> {
-        let obj = self.repo.revparse_single(refspec)?;
-        Ok(CommitHash(obj.id().to_string()))
-    }
-
     pub fn blame(&self, _path: &Path, _at: &CommitHash) -> Result<serde_json::Value> {
         todo!()
+    }
+}
+
+impl Vcs for GitRepo {
+    fn resolve(&self, refspec: &str) -> Result<CommitHash> {
+        let obj = self.repo.revparse_single(refspec)?;
+        Ok(CommitHash(obj.id().to_string()))
     }
 }

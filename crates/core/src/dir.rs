@@ -6,7 +6,7 @@ use types::{Session, SpenserConfig};
 
 pub const SPENSER_DIR: &str = ".spenser";
 
-pub fn find_spencer_dir(start: &Path) -> Option<PathBuf> {
+pub fn find_spenser_dir(start: &Path) -> Option<PathBuf> {
     let mut current = start.to_path_buf();
     loop {
         let candidate = current.join(SPENSER_DIR);

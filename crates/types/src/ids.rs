@@ -29,3 +29,11 @@ pub struct UserId(String);
 // a recorded fact, not an identity — the newtype prevents accidental use as one
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct CommitHash(pub String);
+
+impl CommitHash {
+    /// The conventional 7-character abbreviated hash.
+    pub fn short(&self) -> &str {
+        let len = self.0.len().min(7);
+        &self.0[..len]
+    }
+}

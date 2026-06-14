@@ -36,7 +36,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
     match cli.cmd {
         Cmd::Init { description } => commands::init::execute(description),
-        Cmd::Anchor { commit } => commands::anchor::execute(commit),
+        Cmd::Anchor { commit } => commands::anchor::execute(&commit),
         Cmd::Publish { commit } => commands::publish::execute(commit),
         Cmd::Close {} => commands::close::execute(),
         Cmd::List {} => commands::list::execute(),

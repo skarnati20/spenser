@@ -12,3 +12,7 @@ anyhow = "1"
 core = { path = "../core" }
 git = { path = "../git" }
 types  = { path = "../types" }
+
+[[bin]]
+name = "spenser"
+path = "src/main.rs"

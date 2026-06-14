@@ -1,10 +1,10 @@
 use anyhow::{bail, Result};
-use core::dir::{find_spencer_dir, read_session, write_session};
+use core::dir::{find_spenser_dir, read_session, write_session};
 use std::env;
 
 pub fn execute() -> Result<()> {
     let current_dir = env::current_dir()?;
-    let spenser_dir = find_spencer_dir(&current_dir)
+    let spenser_dir = find_spenser_dir(&current_dir)
         .ok_or_else(|| anyhow::anyhow!("no .spenser directory found"))?;
 
     let mut session = read_session(&spenser_dir)
