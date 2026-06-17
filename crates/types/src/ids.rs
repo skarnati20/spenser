@@ -19,9 +19,18 @@ impl fmt::Display for ChangeId {
 pub struct RoundId(String);
 impl RoundId { pub fn new() -> Self { Self(Uuid::new_v4().to_string()) } }
 
+impl fmt::Display for RoundId {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct CardId(String);
-impl CardId { pub fn new() -> Self { Self(Uuid::new_v4().to_string()) } }
+impl CardId {
+    pub fn new() -> Self { Self(Uuid::new_v4().to_string()) }
+    pub fn as_str(&self) -> &str { &self.0 }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct UserId(String);

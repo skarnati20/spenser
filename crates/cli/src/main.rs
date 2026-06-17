@@ -24,6 +24,10 @@ enum Cmd {
         #[arg(default_value = "HEAD")]
         commit: String,
     },
+    /// Respond to a card
+    Respond,
+    /// Check current review session status
+    Status,
     /// Close the current review session
     Close,
     /// List current review sessions
@@ -38,6 +42,8 @@ fn main() -> Result<()> {
         Cmd::Init { description } => commands::init::execute(description),
         Cmd::Anchor { commit } => commands::anchor::execute(&commit),
         Cmd::Publish { commit } => commands::publish::execute(commit),
+        Cmd::Respond {} => commands::respond::execute(),
+        Cmd::Status {} => commands::status::execute(),
         Cmd::Close {} => commands::close::execute(),
         Cmd::List {} => commands::list::execute(),
         Cmd::Switch { session_id } => commands::switch::execute(session_id),

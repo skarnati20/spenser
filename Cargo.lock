@@ -136,6 +136,7 @@ dependencies = [
  "clap",
  "core",
  "registry",
+ "serde_json",
  "types",
 ]
 
