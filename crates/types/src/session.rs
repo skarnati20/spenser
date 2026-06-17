@@ -38,6 +38,10 @@ impl Session {
         self.status = SessionStatus::Closed;
     }
 
+    pub fn open(&mut self) {
+        self.status = SessionStatus::Open;
+    }
+
     pub fn latest_round(&self) -> Option<&Round> {
         self.rounds.last()
     }

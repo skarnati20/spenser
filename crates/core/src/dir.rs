@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use anyhow::Result;
+use anyhow::{bail,Result};
 use types::{CommitHash, Session, SpenserConfig};
 
 pub const SPENSER_DIR: &str = ".spenser";
@@ -67,6 +67,48 @@ pub fn archive_session(spenser_dir: &Path) -> Result<()> {
         spenser_dir.join("session.json"),
         archive_dir.join(filename),
     )?;
+
+    // remove stale anchor
+    let anchor = spenser_dir.join("anchor");
+    if anchor.exists() {
+        fs::remove_file(anchor)?;
+    }
+
+    Ok(())
+}
+
+pub fn load_session(spenser_dir: &Path, session_id: &str) -> Result<()> {
+    let session = read_session(spenser_dir)
+        .ok_or_else(|| anyhow::anyhow!("no active session in {}", spenser_dir.display()))?;
+    if session.id.as_str() == session_id {
+        return Ok(());
+    }
+    if session.is_open() {
+        bail!("current session is open, run `spenser close` first");
+    }
+
+    let archive_dir = spenser_dir.join("archive");
+    let session_filename = format!("{}.json", session_id);
+    let archive_path = archive_dir.join(session_filename);
+    if !archive_path.exists() {
+        bail!("session {} does not exist", session_id);
+    }
+
+    let old_session_filename = format!("{}.json", session.id);
+    fs::rename(
+        spenser_dir.join("session.json"),
+        archive_dir.join(old_session_filename),
+    )?;
+    fs::rename(
+        archive_path,
+        spenser_dir.join("session.json"),
+    )?;
+
+    // the newly-switched-to session was archived (closed) — re-open it
+    let mut switched = read_session(spenser_dir)
+        .ok_or_else(|| anyhow::anyhow!("failed to load session {session_id}"))?;
+    switched.open();
+    write_session(spenser_dir, &switched)?;
 
     // remove stale anchor
     let anchor = spenser_dir.join("anchor");
