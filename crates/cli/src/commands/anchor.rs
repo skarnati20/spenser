@@ -3,16 +3,7 @@ use std::env;
 use std::fs;
 
 use core::dir::{find_spenser_dir, read_config, read_session};
-use core::vcs::Vcs;
-use git::GitRepo;
-use types::SpenserConfig;
-
-fn open_vcs(config: &SpenserConfig) -> Result<Box<dyn Vcs>> {
-    match config.vcs.as_str() {
-        "git" => Ok(Box::new(GitRepo::open(".")?)),
-        other => bail!("unsupported vcs: {}", other),
-    }
-}
+use registry::open_vcs;
 
 pub fn execute(commit: &str) -> Result<()> {
     let current_dir = env::current_dir()?;
@@ -26,7 +17,7 @@ pub fn execute(commit: &str) -> Result<()> {
     }
 
     let config = read_config(&spenser_dir)?;
-    let vcs = open_vcs(&config)?;
+    let vcs = open_vcs(&config, ".")?;
     let hash = vcs.resolve(commit)?;
 
     fs::write(spenser_dir.join("anchor"), hash.0.as_str())?;

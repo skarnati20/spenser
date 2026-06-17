@@ -1,0 +1,13 @@
+[package]
+name = "slicer"
+version = "0.1.0"
+edition = "2024"
+
+[lints]
+workspace = true
+
+[dependencies]
+core  = { path = "../core" }
+types = { path = "../types" }
+anyhow = "1"
+serde_json = "1"

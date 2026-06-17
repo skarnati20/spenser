@@ -135,7 +135,7 @@ dependencies = [
  "anyhow",
  "clap",
  "core",
- "git",
+ "registry",
  "types",
 ]
 
@@ -621,6 +621,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
 [[package]]
+name = "registry"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "core",
+ "git",
+ "slicer",
+ "types",
+]
+
+[[package]]
 name = "rustversion"
 version = "1.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -686,6 +697,16 @@ name = "slab"
 version = "0.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
+
+[[package]]
+name = "slicer"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "core",
+ "serde_json",
+ "types",
+]
 
 [[package]]
 name = "smallvec"

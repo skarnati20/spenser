@@ -10,7 +10,7 @@ workspace = true
 clap = { version = "4", features = ["derive"] }
 anyhow = "1"
 core = { path = "../core" }
-git = { path = "../git" }
+registry = { path = "../registry" }
 types  = { path = "../types" }
 
 [[bin]]

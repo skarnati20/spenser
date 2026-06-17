@@ -2,7 +2,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use anyhow::Result;
-use types::{Session, SpenserConfig};
+use types::{CommitHash, Session, SpenserConfig};
 
 pub const SPENSER_DIR: &str = ".spenser";
 
@@ -75,4 +75,9 @@ pub fn archive_session(spenser_dir: &Path) -> Result<()> {
     }
 
     Ok(())
+}
+
+pub fn read_anchor(spenser_dir: &Path) -> Option<CommitHash> {
+    let contents = fs::read_to_string(spenser_dir.join("anchor")).ok()?;
+    Some(CommitHash(contents.trim().to_string()))
 }
